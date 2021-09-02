@@ -5,6 +5,9 @@ import Tasks from './components/Tasks';
 import AddTask from './components/AddTask';
 
 function App() {
+  //state for toggling form on button click
+  const [showAddTask, setShowAddTask] = useState(false);
+
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -54,6 +57,19 @@ function App() {
     );
   };
 
+  const addTask = (task) => {
+    console.log(task);
+    // set id to a random number
+    const id = Math.floor(Math.random() * 10000) + 1;
+    console.log(id);
+
+    //add the id to the task
+    const newTask = { id, ...task };
+
+    //create a copy of all existing tasks including the new task
+    setTasks([...tasks, newTask]);
+  };
+
   const deleteTask = (id) => {
     // console.log('delete', id);
     setTasks(tasks.filter((task) => task.id !== id));
@@ -61,8 +77,11 @@ function App() {
 
   return (
     <div className="container">
-      <Header />
-      <AddTask />
+      {/* set showAddTask to opposite of current value*/}
+      <Header onAdd={() => setShowAddTask(!showAddTask)} />
+      {/* If showAddTask is true show AddTask component otherwise do nothing */}
+      {/* shorthand for ternary : else condition is assumed */}
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
