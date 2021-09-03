@@ -78,7 +78,11 @@ function App() {
   return (
     <div className="container">
       {/* set showAddTask to opposite of current value*/}
-      <Header onAdd={() => setShowAddTask(!showAddTask)} />
+      {/* btn click flips the boolean */}
+      <Header
+        onAdd={() => setShowAddTask(!showAddTask)}
+        showAdd={showAddTask}
+      />
       {/* If showAddTask is true show AddTask component otherwise do nothing */}
       {/* shorthand for ternary : else condition is assumed */}
       {showAddTask && <AddTask onAdd={addTask} />}
